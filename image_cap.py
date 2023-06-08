@@ -43,10 +43,6 @@ initial_orientation = airsim.to_eularian_angles(initial_pose.orientation)
 
 for s in range(steps):
 
-    # # Get camera position
-    # camera_pose = client.simGetVehiclePose()
-    # camera_position = camera_pose.position
-
     # Calculate position along figure-8 trajectory
     t = 2 * pi * (s / steps)  # normalized time variable
     x = initial_position.x_val + radius * math.sin(t)
