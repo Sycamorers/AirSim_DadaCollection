@@ -27,9 +27,11 @@ except OSError:
  
 # Setup parameters for figure-8 motion
 radius = 50  # radius of the figure-8 motion
-images = 20  # number of images to capture
-steps = images  # steps to complete the figure-8 motion
 pi = math.pi  # pi constant
+total_time = 60  # Total time to complete the figure-8 motion in seconds
+images = 100  # Number of images to capture (also the number of steps)
+steps = images
+delay = total_time / steps  # Time delay between steps
 
 # Get initial camera position
 initial_pose = client.simGetVehiclePose()
@@ -69,7 +71,7 @@ for s in range(steps):
             print("Type %d, size %d, pos %s" % (response.image_type, len(response.image_data_uint8), pprint.pformat(response.camera_position)))
             airsim.write_file(os.path.normpath(filename + '.png'), response.image_data_uint8)
 
-    time.sleep(3)
+    time.sleep(delay)
 
 # currently reset() doesn't work in CV mode. Below is the workaround
 client.simSetVehiclePose(airsim.Pose(airsim.Vector3r(0, 0, 0), airsim.to_quaternion(0, 0, 0)), True)
